@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     // Execute os comandos para realizar o build do projeto Spring Boot Java 17
-                    sh 'mvn clean package'
+                    sh 'mvnw clean package'
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // Execute os comandos para realizar os testes unitários
-                    sh 'mvn test'
+                    sh 'mvnw test'
                 }
             }
         }
