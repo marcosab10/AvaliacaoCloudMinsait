@@ -54,6 +54,16 @@
 			<version>8.0.32</version>
 		</dependency>
 
+		<dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+		<dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+    </dependency>
+
 	</dependencies>
 
 	<build>
