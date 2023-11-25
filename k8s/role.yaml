@@ -1,0 +1,9 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: desafio
+  name: desafio-full-access-role
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services", "deployments", "secrets", "persistentvolumeclaims"]
+  verbs: ["get", "list", "watch", "create", "update", "delete"]
