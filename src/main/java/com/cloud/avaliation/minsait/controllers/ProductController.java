@@ -23,7 +23,7 @@ public class ProductController {
   @GetMapping
   public ResponseEntity<List<Product>> getAllProducts() {
     List<Product> products = productService.getAllProducts();
-    logger.info("Listando todos os produtos!");
+    logger.info("Listando todos os produtos!!!");
     return ResponseEntity.ok(products);
   }
 
