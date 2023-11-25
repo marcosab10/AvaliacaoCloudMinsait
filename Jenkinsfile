@@ -49,7 +49,7 @@ pipeline {
                 script {
                     withKubeConfig([credentialsId: 'kubeconfig']) {
                         sh "kubectl apply -f ./k8s/deployment.yaml --namespace=$KUBE_NAMESPACE"
-                        sh "kubectl set image deployment/minsait-container minsait-container=$DOCKER_HUB_REPO:latest"
+                        sh "kubectl set image deployment/minsait-deployment minsait-container=$DOCKER_HUB_REPO:latest"
                     }
                 }
             }
