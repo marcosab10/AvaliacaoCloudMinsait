@@ -29,7 +29,7 @@ pipeline {
         stage('Gerar Imagem Docker') {
             steps {
                 script {
-                    dockerapp = docker.build("$DOCKER_HUB_REPO:latest", '-f ./Dockerfile .')
+                    dockerapp = docker.build("$DOCKER_HUB_REPO:${env.BUILD_ID}", '-f ./Dockerfile .')
                 }
             }
         }
@@ -39,6 +39,7 @@ pipeline {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                         dockerapp.push('latest')
+                        dockerapp.push("${env.BUILD_ID}")
                     }
                 }
             }
@@ -49,7 +50,7 @@ pipeline {
                 script {
                     withKubeConfig([credentialsId: 'kubeconfig']) {
                         sh "kubectl apply -f ./k8s/deployment.yaml --namespace=$KUBE_NAMESPACE"
-                        sh "kubectl set image deployment/minsait-deployment minsait-container=$DOCKER_HUB_REPO:latest --namespace=$KUBE_NAMESPACE"
+                        sh "kubectl set image deployment/minsait-deployment minsait-container=$DOCKER_HUB_REPO:${env.BUILD_ID} --namespace=$KUBE_NAMESPACE"
                     }
                 }
             }
