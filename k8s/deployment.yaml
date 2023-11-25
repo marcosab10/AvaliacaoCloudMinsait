@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minsait-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minsait
+  template:
+    metadata:
+      labels:
+        app: minsait
+    spec:
+      containers:
+      - name: minsait-container
+        image: marcosab10/minsait:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DATABASE_URL
+          value: jdbc:mysql://mysql-service:3306/minsait_bd
+        - name: DATABASE_USERNAME
+          value: root
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_ROOT_PASSWORD
+      - name: mysql-container
+        image: mysql:latest
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_ROOT_PASSWORD
+        - name: MYSQL_DATABASE
+          value: minsait_bd
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+  volumes:
+  - name: mysql-persistent-storage
+    persistentVolumeClaim:
+      claimName: mysql-pvc
