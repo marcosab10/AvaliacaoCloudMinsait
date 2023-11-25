@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+jenkins_conf/kubeconfig.yaml
+jenkins_conf/senha.txt
